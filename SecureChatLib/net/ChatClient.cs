@@ -136,13 +136,13 @@ namespace SecureChatLib.net
                     receiverPublicKey = Convert.FromBase64String(decryptedPackageArray[PackageLocation.FORWARDPUBLICKEYREQUEST.PUBLIC_KEY]);
                     GetCommonSecret(senderId, receiverPublicKey);
                     respondToPublicKey(senderId);
-                    return "---Received key from " + senderId.ToString();
+                    return "---Received key from " + onlineUsernames[senderId];
 
                 case "FORWARDPUBLICKEYACCEPT":
                     senderId = new Guid(decryptedPackageArray[PackageLocation.FORWARDPUBLICKEYACCEPT.SENDER_ID]);
                     receiverPublicKey = Convert.FromBase64String(decryptedPackageArray[PackageLocation.FORWARDPUBLICKEYACCEPT.PUBLIC_KEY]);
                     GetCommonSecret(senderId, receiverPublicKey);
-                    return "---Accepted key from " + senderId.ToString();
+                    return "---Accepted key from " + onlineUsernames[senderId];
                 case "FORWARD":
                     senderId = new Guid(decryptedPackageArray[PackageLocation.FORWARD.SENDER_ID]);
                     string signature = decryptedPackageArray[PackageLocation.FORWARD.SIGNATURE];
@@ -225,8 +225,6 @@ namespace SecureChatLib.net
 
                 sendQueue.Add(securePackage);
             }
-            //msg = "CHATMESSAGE;" + Username + ";" + message + ";" + id.ToString() + ";";
-            //sendQueue.Enqueue(msg);
         }
 
         public void SendFileMessage(Guid remoteId, string fileName, byte[] rawFile)
